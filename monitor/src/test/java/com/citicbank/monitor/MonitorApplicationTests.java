@@ -8,7 +8,7 @@ class MonitorApplicationTests {
 
     @Test
     void contextLoads() {
-        System.out.println("aaa");
+        System.out.println("aaaaaa");
     }
 
 }
