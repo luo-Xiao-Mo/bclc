@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+
+    <!-- 本机驱动地址 -->
+    <classPathEntry
+            location="/Users/sina/Desktop/java/repository/mysql/mysql-connector-java/5.1.42/mysql-connector-java-5.1.42.jar"/>
+
+    <context id="context">
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments" value="true"/>
+            <property name="mergeable" value="false"/>
+        </commentGenerator>
+
+        <!-- JDBC驱动 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/docker_mysql" userId="docker"
+                        password="123456"/>
+
+        <!-- 生成Domain代码地址 -->
+        <!--javaModelGenerator targetPackage="com.citicbankank.monitor.domain.rbac" targetProject="src/main/java">
+        <property name="trimStrings" value="true"/>
+        </javaModelGenerator>-->
+        <javaModelGenerator targetPackage="com.tool.monitor.entity.generate" targetProject="src/main/java">
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!-- 生成mapper.xml文件地址 -->
+        <!--<sqlMapGenerator targetPackage="mapper/rbac" targetProject="src/main/resources"/> -->
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources"/>
+
+        <!-- 生成mapper接口代码地址 -->
+        <!--    <javaClientGenerator targetPackage="com.citicbankank.monitor.mapper.rbac" targetProject="src/main/java" type="XMLMAPPER"/> -->
+        <javaClientGenerator targetPackage="com.tool.monitor.mapper" targetProject="src/main/java"
+                             type="XMLMAPPER"/>
+
+
+        <table tableName="sys_menu" domainObjectName="SysMenu"/>
+        <table tableName="sys_role" domainObjectName="SysRole"/>
+        <table tableName="sys_role_menu" domainObjectName="SysRoleMenu"/>
+        <table tableName="sys_user" domainObjectName="SysUser"/>
+        <table tableName="sys_user_role" domainObjectName="SysUserRole"/>
+    </context>
+</generatorConfiguration>
