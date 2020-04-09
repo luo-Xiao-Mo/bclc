@@ -36,11 +36,11 @@ public class LoginController {
                 return ResultBuilder.genSuccessResult("用户[" + user.getUsername() + "]登录认证失败,重新登陆");
             }
         } catch (Exception e) {
-            return ResultBuilder.genFailResult("登录异常");
+            return ResultBuilder.genFailResult("用户[" + user.getUsername() + "]登录认证失败,重新登陆");
         }
     }
 
-    @RequestMapping(value = "/logout", method = {RequestMethod.POST, RequestMethod.GET})
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
     public Result logout() {
         Subject subject = SecurityUtils.getSubject();
         if (subject.isAuthenticated()) {
@@ -56,7 +56,7 @@ public class LoginController {
     }
 
     //未授权登录验证
-    @RequestMapping(value = "/403", method = RequestMethod.POST)
+    @RequestMapping(value = "/403")
     public Result unauthorize() {
         return ResultBuilder.genUnauthorizedResult("未授权");
     }

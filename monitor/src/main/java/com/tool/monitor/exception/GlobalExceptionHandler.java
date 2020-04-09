@@ -3,11 +3,14 @@ package com.tool.monitor.exception;
 
 import com.tool.monitor.core.result.Result;
 import com.tool.monitor.core.result.ResultBuilder;
+import org.apache.shiro.authz.AuthorizationException;
+import org.apache.shiro.authz.UnauthorizedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.util.StringUtils;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -83,6 +86,21 @@ public class GlobalExceptionHandler {
         return ResultBuilder.genFailResult(msg);
     }
 
+
+    @ExceptionHandler(value = UnauthorizedException.class)
+    public Result handleShiroException(UnauthorizedException e) {
+        return ResultBuilder.genFailResult("无权限操作");
+    }
+
+    @ExceptionHandler(value = AuthorizationException.class)
+    public Result AuthorizationException(UnauthorizedException e) {
+        return ResultBuilder.genFailResult("权限认证失败");
+    }
+
+    @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
+    public Result HttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
+        return ResultBuilder.genFailResult("未登录");
+    }
 
     /**
      * 其他异常处理
