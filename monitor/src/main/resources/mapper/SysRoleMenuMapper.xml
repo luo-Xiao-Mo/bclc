@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.citicbank.monitor.mapper.SysRoleMenuMapper">
-  <resultMap id="BaseResultMap" type="com.citicbank.monitor.entity.generate.SysRoleMenuKey">
+<mapper namespace="com.tool.monitor.mapper.SysRoleMenuMapper">
+  <resultMap id="BaseResultMap" type="com.tool.monitor.entity.generate.SysRoleMenuKey">
     <id column="role_id" jdbcType="VARCHAR" property="roleId" />
     <id column="menu_id" jdbcType="VARCHAR" property="menuId" />
   </resultMap>
@@ -66,7 +66,7 @@
   <sql id="Base_Column_List">
     role_id, menu_id
   </sql>
-  <select id="selectByExample" parameterType="com.citicbank.monitor.entity.generate.SysRoleMenuExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.tool.monitor.entity.generate.SysRoleMenuExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -80,22 +80,22 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="com.citicbank.monitor.entity.generate.SysRoleMenuKey">
+  <delete id="deleteByPrimaryKey" parameterType="com.tool.monitor.entity.generate.SysRoleMenuKey">
     delete from sys_role_menu
     where role_id = #{roleId,jdbcType=VARCHAR}
       and menu_id = #{menuId,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.citicbank.monitor.entity.generate.SysRoleMenuExample">
+  <delete id="deleteByExample" parameterType="com.tool.monitor.entity.generate.SysRoleMenuExample">
     delete from sys_role_menu
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.citicbank.monitor.entity.generate.SysRoleMenuKey">
+  <insert id="insert" parameterType="com.tool.monitor.entity.generate.SysRoleMenuKey">
     insert into sys_role_menu (role_id, menu_id)
     values (#{roleId,jdbcType=VARCHAR}, #{menuId,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.citicbank.monitor.entity.generate.SysRoleMenuKey">
+  <insert id="insertSelective" parameterType="com.tool.monitor.entity.generate.SysRoleMenuKey">
     insert into sys_role_menu
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="roleId != null">
@@ -114,7 +114,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.citicbank.monitor.entity.generate.SysRoleMenuExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.tool.monitor.entity.generate.SysRoleMenuExample" resultType="java.lang.Long">
     select count(*) from sys_role_menu
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.citicbank.monitor.mapper.SysUserRoleMapper">
-  <resultMap id="BaseResultMap" type="com.citicbank.monitor.entity.generate.SysUserRoleKey">
+<mapper namespace="com.tool.monitor.mapper.SysUserRoleMapper">
+  <resultMap id="BaseResultMap" type="com.tool.monitor.entity.generate.SysUserRoleKey">
     <id column="user_id" jdbcType="VARCHAR" property="userId" />
     <id column="role_id" jdbcType="VARCHAR" property="roleId" />
   </resultMap>
@@ -66,7 +66,7 @@
   <sql id="Base_Column_List">
     user_id, role_id
   </sql>
-  <select id="selectByExample" parameterType="com.citicbank.monitor.entity.generate.SysUserRoleExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.tool.monitor.entity.generate.SysUserRoleExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -80,22 +80,22 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="com.citicbank.monitor.entity.generate.SysUserRoleKey">
+  <delete id="deleteByPrimaryKey" parameterType="com.tool.monitor.entity.generate.SysUserRoleKey">
     delete from sys_user_role
     where user_id = #{userId,jdbcType=VARCHAR}
       and role_id = #{roleId,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.citicbank.monitor.entity.generate.SysUserRoleExample">
+  <delete id="deleteByExample" parameterType="com.tool.monitor.entity.generate.SysUserRoleExample">
     delete from sys_user_role
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.citicbank.monitor.entity.generate.SysUserRoleKey">
+  <insert id="insert" parameterType="com.tool.monitor.entity.generate.SysUserRoleKey">
     insert into sys_user_role (user_id, role_id)
     values (#{userId,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.citicbank.monitor.entity.generate.SysUserRoleKey">
+  <insert id="insertSelective" parameterType="com.tool.monitor.entity.generate.SysUserRoleKey">
     insert into sys_user_role
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="userId != null">
@@ -114,7 +114,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.citicbank.monitor.entity.generate.SysUserRoleExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.tool.monitor.entity.generate.SysUserRoleExample" resultType="java.lang.Long">
     select count(*) from sys_user_role
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />

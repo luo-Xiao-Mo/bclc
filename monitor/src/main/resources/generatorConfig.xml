@@ -21,9 +21,9 @@
 
         <!-- 生成Domain代码地址 -->
         <!--javaModelGenerator targetPackage="com.citicbankank.monitor.domain.rbac" targetProject="src/main/java">
-            <property name="trimStrings" value="true"/> 
+        <property name="trimStrings" value="true"/>
         </javaModelGenerator>-->
-        <javaModelGenerator targetPackage="com.citicbank.monitor.entity.generate" targetProject="src/main/java">
+        <javaModelGenerator targetPackage="com.tool.monitor.entity.generate" targetProject="src/main/java">
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
 
@@ -33,7 +33,7 @@
 
         <!-- 生成mapper接口代码地址 -->
         <!--    <javaClientGenerator targetPackage="com.citicbankank.monitor.mapper.rbac" targetProject="src/main/java" type="XMLMAPPER"/> -->
-        <javaClientGenerator targetPackage="com.citicbank.monitor.mapper" targetProject="src/main/java"
+        <javaClientGenerator targetPackage="com.tool.monitor.mapper" targetProject="src/main/java"
                              type="XMLMAPPER"/>
 
 
@@ -42,33 +42,5 @@
         <table tableName="sys_role_menu" domainObjectName="SysRoleMenu"/>
         <table tableName="sys_user" domainObjectName="SysUser"/>
         <table tableName="sys_user_role" domainObjectName="SysUserRole"/>
-        <!--<table tableName="SYS_ORG_TEMP" domainObjectName="SysOrgTemp"/>
-
-        <table tableName="SYS_RES_MENU" />
-        <table tableName="SYS_RES_PATH" />
-        <table tableName="SYS_PERM" />
-        <table tableName="SYS_ROLE" />
-        <table tableName="SYS_PERM_MENU" />
-        <table tableName="SYS_PERM_PATH" />
-        <table tableName="SYS_ROLE_PERM" />
-        <table tableName="SYS_USER_ROLE" />
-        <table tableName="SYS_USER" />
-        <table tableName="SYS_ORG" />
-        
-        
-        <table tableName="T_ACCEPT" domainObjectName="Accept" />
-        <table tableName="T_ASSET" domainObjectName="Asset" />
-        <table tableName="T_ASSET_FORFAITER" domainObjectName="AssetForfaiter" />
-        <table tableName="T_CAPITAL" domainObjectName="Capital" />
-        <table tableName="T_CAPITAL_FORFAITER" domainObjectName="CapitalForfaiter" />
-        <table tableName="T_DICT" domainObjectName="Dict" />
-        <table tableName="T_FFT_TRAN" domainObjectName="FftTran" />
-        <table tableName="T_FILE_CACHE" domainObjectName="FileCache" />
-        <table tableName="T_FORFAITER" domainObjectName="Forfaiter" />
-        <table tableName="T_FORFAITER_QUOTE" domainObjectName="ForfaiterQuote" />
-        <table tableName="T_GJ_TRAN_LOG" domainObjectName="GjTranLog" />
-        <table tableName="T_TRAN_LOG" domainObjectName="TranLog" />
-        <table tableName="T_REVIEW" domainObjectName="Review" />
-         -->
     </context>
 </generatorConfiguration>
