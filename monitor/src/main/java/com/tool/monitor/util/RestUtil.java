@@ -9,7 +9,8 @@ import java.util.List;
 import com.tool.monitor.core.result.Result;
 import com.tool.monitor.core.result.ResultBuilder;
 import com.tool.monitor.core.result.ResultCode;
-import com.tool.monitor.entity.generate.RespondResult;
+import com.tool.monitor.entity.RespondResult;
+import com.tool.monitor.entity.schedule.ScheduleRespond;
 import com.tool.monitor.exception.ServiceException;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -27,19 +28,7 @@ public class RestUtil {
     @Autowired
     private RestTemplate restTemplate;
 
-    public Result packExecute(HttpMethod httpMethod, String tranUrl, Object
-            tranRequest, Object... uriVariables) throws Exception {
-        String responseStr = this.execute(httpMethod, tranUrl, tranRequest, uriVariables);
-        if (!StringUtils.isEmpty(responseStr)) {
-            RespondResult result = this.resolveResponse(responseStr);
-            if (result != null && String.valueOf(ResultCode.SUCCESS.getCode()).equals(result.getReturnCode())) {
-                return ResultBuilder.genSuccessResult(result);
-            }
-        }
-        return ResultBuilder.genFailResult("查询失败");
-    }
-
-    private String execute(HttpMethod httpMethod, String tranUrl, Object
+    public String execute(HttpMethod httpMethod, String tranUrl, Object
             tranRequest, Object... uriVariables) {
         // 校验
         if (httpMethod == null) {
@@ -90,12 +79,5 @@ public class RestUtil {
 
         }
         return responseStr;
-    }
-
-    private RespondResult resolveResponse(String responseStr) throws JsonParseException, JsonMappingException, IOException {
-        if (StringUtils.isEmpty(responseStr)) {
-            return null;
-        }
-        return JsonUtil.unmarshall(responseStr, RespondResult.class);
     }
 }

@@ -1,11 +1,12 @@
 package com.tool.monitor.service.impl;
 
-import com.tool.monitor.controller.param.SystemInfoParm;
 import com.tool.monitor.core.result.Result;
 import com.tool.monitor.core.result.ResultBuilder;
 import com.tool.monitor.core.result.ResultCode;
+import com.tool.monitor.entity.RespondResult;
 import com.tool.monitor.entity.schedule.ScheduleRespond;
-import com.tool.monitor.service.SystemInfoService;
+import com.tool.monitor.entity.schedule.SysTemTask;
+import com.tool.monitor.service.ScheduleService;
 import com.tool.monitor.util.JsonUtil;
 import com.tool.monitor.util.RestUtil;
 import org.slf4j.Logger;
@@ -17,32 +18,33 @@ import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.util.List;
+
 
 @Service
-public class SystemInfoServiceImpl implements SystemInfoService {
+public class ScheduleServiceImpl implements ScheduleService {
 
-
-    @Value(value = "${plmp.base.url}/devOpsSynchroSystemInfo.action")
-    private String SystemInfoUrl;
+    @Value(value = "${plmp.base.url}/getDevTaskInfoByScheduleNo.action")
+    private String ScheduleUrl;
     @Resource
     private RestUtil restUtil;
     private final Logger logger = LoggerFactory.getLogger(ScheduleServiceImpl.class);
 
     @Override
-    public Result infoToTransfer(SystemInfoParm systemInfoParm) {
-        String responseStr = restUtil.execute(HttpMethod.POST, SystemInfoUrl, systemInfoParm, null);
+    public Result taskByScheduleNo(String scheduleNo) {
+        String responseStr = restUtil.execute(HttpMethod.POST, ScheduleUrl, scheduleNo, null);
         if (!StringUtils.isEmpty(responseStr)) {
             try {
                 ScheduleRespond result = JsonUtil.unmarshall(responseStr, ScheduleRespond.class);
                 if (result != null && String.valueOf(ResultCode.SUCCESS.getCode()).equals(result.getReturnCode())) {
-                    return ResultBuilder.genSuccessResult(result);
+                    return ResultBuilder.genSuccessResult(result.getSysTemTaskList());
                 }
             } catch (IOException e) {
                 logger.error("响应字符串转对象异常,响应字符串为 = {}", responseStr);
             } catch (Exception e) {
-                logger.error("系统信息同步接口失败,错误信息为= {}", e.toString());
+                logger.error("查询排期关联系统的开发任务失败,排期编号 = {},错误信息为= {}", scheduleNo, e.toString());
             }
         }
-        return ResultBuilder.genFailResult("系统信息同步接口查询失败");
+        return ResultBuilder.genFailResult("查询排期关联系统的开发任务失败");
     }
 }

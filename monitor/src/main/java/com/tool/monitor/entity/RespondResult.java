@@ -1,4 +1,4 @@
-package com.tool.monitor.entity.generate;
+package com.tool.monitor.entity;
 
 import java.util.List;
 
