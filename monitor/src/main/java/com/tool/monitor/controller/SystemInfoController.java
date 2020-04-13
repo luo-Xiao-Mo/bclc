@@ -67,14 +67,14 @@ public class SystemInfoController {
             SystemInfo systemInfo = new SystemInfo();
             try {
                 RespondResult respondResult = JsonUtil.unmarshall(object.toString(), RespondResult.class);
-                List<Object> list = respondResult.getData();
-                for (Object obj : list) {
-                    systemInfo = (SystemInfo) obj;
-                    //temp写法 需要看每条数据是否存在主键;
-                    if (systemInfoParm.getStsTag().equals(systemInfo.getSameBuild())) {
-                        break;
-                    }
-                }
+//                List<Object> list = respondResult.getData();
+//                for (Object obj : list) {
+//                    systemInfo = (SystemInfo) obj;
+//                    //temp写法 需要看每条数据是否存在主键;
+//                    if (systemInfoParm.getStsTag().equals(systemInfo.getSameBuild())) {
+//                        break;
+//                    }
+//                }
             } catch (Exception e) {
                 return ResultBuilder.genFailResult("查询详情失败");
             }
