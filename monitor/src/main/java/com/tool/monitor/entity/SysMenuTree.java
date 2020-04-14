@@ -6,7 +6,8 @@ public class SysMenuTree {
     private String menuId;
     private String menuName;
     private String url;
-    private List<SysMenuTree> sysMenuTreeList;
+    private String parentId;
+    private List<SysMenuTree> childNode;
 
     public String getMenuId() {
         return menuId;
@@ -32,11 +33,19 @@ public class SysMenuTree {
         this.url = url;
     }
 
-    public List<SysMenuTree> getSysMenuTreeList() {
-        return sysMenuTreeList;
+    public String getParentId() {
+        return parentId;
     }
 
-    public void setSysMenuTreeList(List<SysMenuTree> sysMenuTreeList) {
-        this.sysMenuTreeList = sysMenuTreeList;
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
+
+    public List<SysMenuTree> getChildNode() {
+        return childNode;
+    }
+
+    public void setChildNode(List<SysMenuTree> childNode) {
+        this.childNode = childNode;
     }
 }

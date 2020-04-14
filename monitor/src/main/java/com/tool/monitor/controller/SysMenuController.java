@@ -5,6 +5,7 @@ import com.tool.monitor.core.result.ResultBuilder;
 import com.tool.monitor.entity.generate.SysMenu;
 import com.tool.monitor.entity.generate.SysUser;
 import com.tool.monitor.service.SysMenuService;
+import com.tool.monitor.util.TreeUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.session.Session;
@@ -30,15 +31,14 @@ public class SysMenuController {
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     @RequiresPermissions("sysMenu:list")
     public Result sysMenuList() {
-        //TODO 临时从session中获取用户信息
         Session session = SecurityUtils.getSubject().getSession();
         SysUser user = (SysUser) session.getAttribute("user");
         List<SysMenu> menus;
         if (user != null) {
             menus = sysMenuService.getMenusByUserId(user.getUserId());
-        } else {
-            return ResultBuilder.genSuccessResult("session中无此用户信息");
+            TreeUtil treeUtil = new TreeUtil(menus);
+            return ResultBuilder.genSuccessResult(treeUtil.builTree());
         }
-        return ResultBuilder.genSuccessResult(menus);
+        return ResultBuilder.genSuccessResult("查询菜单失败");
     }
 }
