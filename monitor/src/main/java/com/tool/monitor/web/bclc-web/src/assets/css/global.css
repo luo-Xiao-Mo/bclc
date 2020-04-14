@@ -1,0 +1,42 @@
+*{
+    font-family: 'Microsoft YaHei';
+}
+
+#app {min-width: 1200px; font-size: 14px;}
+::-webkit-input-placeholder{color: #999 !important}
+:-moz-placeholder{color: #999 !important}
+:-ms-input-placeholder{color: #999 !important}
+
+.btn-position{
+    text-align: center;
+    margin-top: 40px;
+}
+.btn-class{
+    font-family: inherit;
+    background: red;
+    color: white;
+    border: #FFF solid 1px;
+}
+.btn-class:hover{
+    color: red;
+    background: #FFF;
+    border: red solid 1px;
+}
+.el-input__inner{
+    height: 35px !important;
+}
+.el-pagination.is-background .el-pager li:not(.disabled).active {
+    background-color: RED;
+    color: #FFF;
+}
+.el-input__inner {
+    height: 28px !important;
+}
+.el-pager li.active {
+    cursor: pointer;
+}
+
+.el-pagination >.is-background{
+    max-width: 400px;
+    margin-left: 20%;
+}

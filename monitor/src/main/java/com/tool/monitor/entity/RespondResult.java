@@ -1,5 +1,7 @@
 package com.tool.monitor.entity;
 
+import com.google.common.base.MoreObjects;
+
 import java.util.List;
 
 public class RespondResult {
@@ -9,7 +11,6 @@ public class RespondResult {
     private String totalNum;
     //多余查询返回记录数
     private String returnNum;
-    private List<Object> data;
 
     public String getReturnCode() {
         return returnCode;
@@ -43,11 +44,12 @@ public class RespondResult {
         this.returnNum = returnNum;
     }
 
-    public List<Object> getData() {
-        return data;
-    }
-
-    public void setData(List<Object> data) {
-        this.data = data;
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this.getClass())
+                .add("returnCode", returnCode)
+                .add("returnMsg", returnMsg)
+                .add("totalNum", totalNum)
+                .add("returnNum", returnNum).toString();
     }
 }

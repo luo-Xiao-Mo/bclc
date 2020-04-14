@@ -1,4 +1,4 @@
-# vue-bt-web
+# bclc-demo
 
 > A Vue.js project
 
