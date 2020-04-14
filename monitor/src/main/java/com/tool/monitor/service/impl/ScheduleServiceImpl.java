@@ -56,7 +56,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public Result MessageByScheduleNo(ScheduleInfoDetailParm scheduleInfoDetailParm) {
-        String responseStr = restUtil.execute(HttpMethod.POST, scheduleTaskUrl, scheduleInfoDetailParm, null);
+        String responseStr = restUtil.execute(HttpMethod.POST, scheduleMessageUrl, scheduleInfoDetailParm, null);
         if (!StringUtils.isEmpty(responseStr)) {
             try {
                 ScheduleMessageRespond result = JsonUtil.unmarshall(responseStr, ScheduleMessageRespond.class);
