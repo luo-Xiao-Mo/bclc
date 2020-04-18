@@ -17,6 +17,8 @@ const systemTaskStateSyn = () => import('@/components/system/systemTaskStateSyn'
 
 /** 排期相关*/ 
 const scheduleInfoQueryList = () => import('@/components/schedule/scheduleInfoQueryList')
+const associatedSystemDevTaskList = () => import('@/components/schedule/associatedSystemDevTaskList')
+const associatedSystemDevTaskListDetail = () => import('@/components/schedule/associatedSystemDevTaskListDetail')
 Vue.use(Router)
 
 export default new Router({
@@ -70,6 +72,16 @@ export default new Router({
       path: '/scheduleInfoQueryList',
       name: '排期信息查询列表',
       component: scheduleInfoQueryList
+    },
+    {
+      path: '/associatedSystemDevTaskList',
+      name: '排期下关联系统开发任务列表',
+      component: associatedSystemDevTaskList
+    },
+    {
+      path: '/associatedSystemDevTaskListDetail',
+      name: '排期下关联系统开发任务列表详情',
+      component: associatedSystemDevTaskListDetail
     },
   ]
 })
