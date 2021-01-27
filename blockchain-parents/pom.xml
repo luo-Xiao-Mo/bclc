@@ -18,6 +18,8 @@
         <module>blockchain-file-service-impl</module>
         <module>blockchain-config-service</module>
         <module>blockchain-zuul-service</module>
+        <module>blockchain-service</module>
+        <module>blockchain-service-impl</module>
     </modules>
     <packaging>pom</packaging>
     <parent>
@@ -89,6 +91,12 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-zuul</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.60</version>
         </dependency>
 
         <!--<dependency>-->
