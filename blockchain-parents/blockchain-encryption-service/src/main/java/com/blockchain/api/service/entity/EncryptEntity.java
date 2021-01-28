@@ -3,10 +3,10 @@ package com.blockchain.api.service.entity;
 import lombok.Data;
 
 @Data
-public class User {
+public class EncryptEntity {
 
     private String name;
     private String age;
-    private String team;
-    private String domain;
+    private String encryptData;
+    private String publicKey;
 }

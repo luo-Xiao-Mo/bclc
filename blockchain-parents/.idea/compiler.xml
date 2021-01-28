@@ -7,21 +7,21 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="blockchain-common" />
-        <module name="blockchain-config-service" />
-        <module name="blockchain-encryption-service" />
         <module name="blockchain-encryption-service-impl" />
         <module name="blockchain-eureka-service" />
+        <module name="blockchain-encryption-service" />
         <module name="blockchain-file-service" />
-        <module name="blockchain-file-service-impl" />
-        <module name="blockchain-message-service" />
-        <module name="blockchain-message-service-impl" />
-        <module name="blockchain-zuul-service" />
-        <module name="com-blockChain-common" />
-        <module name="com-blockChain-encryption-service-impl" />
         <module name="com-blockChain-eureka-service" />
         <module name="com-blockChain-message-service-impl" />
+        <module name="blockchain-zuul-service" />
+        <module name="blockchain-common" />
+        <module name="blockchain-config-service" />
+        <module name="blockchain-message-service-impl" />
+        <module name="blockchain-file-service-impl" />
         <module name="com-blockChain-zuul-service" />
+        <module name="blockchain-message-service" />
+        <module name="com-blockChain-common" />
+        <module name="com-blockChain-encryption-service-impl" />
       </profile>
     </annotationProcessing>
   </component>
