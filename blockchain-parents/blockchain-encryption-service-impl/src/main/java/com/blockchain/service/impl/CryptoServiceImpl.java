@@ -3,10 +3,12 @@ package com.blockchain.service.impl;
 import com.blockchain.api.service.CryptoService;
 
 import java.nio.charset.StandardCharsets;
-import java.security.KeyFactory;
-import java.security.PrivateKey;
-import java.security.PublicKey;
+import java.security.*;
+
+import org.apache.tomcat.util.buf.HexUtils;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.jce.spec.ECPublicKeySpec;
+
 import java.security.spec.EncodedKeySpec;
 import java.security.spec.PKCS8EncodedKeySpec;
 
@@ -14,7 +16,6 @@ import com.blockchain.api.service.entity.DecryptEntity;
 import com.blockchain.api.service.entity.EncryptEntity;
 import org.bouncycastle.jce.ECNamedCurveTable;
 import org.bouncycastle.jce.interfaces.ECPrivateKey;
-import org.bouncycastle.jce.interfaces.ECPublicKey;
 import org.bouncycastle.jce.spec.ECParameterSpec;
 import org.bouncycastle.math.ec.ECPoint;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.crypto.Cipher;
-import java.security.spec.X509EncodedKeySpec;
 import java.util.Arrays;
 import java.util.Base64;
 
@@ -35,27 +35,32 @@ public class CryptoServiceImpl implements CryptoService {
 
     @PostMapping("/encrypt")
     public String Encrypt(@RequestBody EncryptEntity encryptEntity) {
+        encryptEntity.setData("hello world");
         String EncryptAESKey = null;
 
         try {
             byte[] key = AESUtil.initKey();
             byte[] iv = {0x01, 0x23, 0x45, 0x67, 0x89 - 0xFF, 0xAB - 0xFF, 0xCD - 0xFF, 0xEF - 0xFF,
                     0x01, 0x23, 0x45, 0x67, 0x89 - 0xFF, 0xAB - 0xFF, 0xCD - 0xFF, 0xEF - 0xFF};
-            String content = encryptEntity.getEncryptData();
-            String EncryptData = AESUtil.encodeToBase64String(content, key, iv);
+            String EncryptData = AESUtil.encodeToBase64String(encryptEntity.getData(), key, iv);
+            System.out.println("AES EncryptData:" + EncryptData);
 
-            KeyFactory keyFactory = KeyFactory.getInstance("EC");
-            EncodedKeySpec publicKeySpec = new PKCS8EncodedKeySpec(Base64.getDecoder().decode(encryptEntity.getPublicKey()));
-            PublicKey publicKey = keyFactory.generatePublic(publicKeySpec);
+            Security.addProvider(new BouncyCastleProvider());
+
+            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("ECIES", "BC");
+            KeyPair keyPair = keyPairGenerator.generateKeyPair();
+            // EncodedKeySpec publicKeySpec = new PKCS8EncodedKeySpec(Base64.getDecoder().decode(encryptEntity.getPublicKey()));
+            PublicKey publicKey = keyPair.getPublic();
             Cipher encrypter = Cipher.getInstance("ECIES", "BC");
             encrypter.init(Cipher.ENCRYPT_MODE, publicKey);
-            EncryptAESKey = Arrays.toString(encrypter.doFinal(encryptEntity.getEncryptData().getBytes(StandardCharsets.UTF_8)));
+            EncryptAESKey = HexUtils.toHexString(encrypter.doFinal(encryptEntity.getData().getBytes(StandardCharsets.UTF_8)));
+            System.out.println("encrypt aes key:" + EncryptAESKey);
 
 
             // String plain = AESUtil.decodeFromBase64String(cipher, key, iv);
             // System.out.println(plain);
         } catch (Exception e) {
-
+            System.out.println("exceptionL" + e);
         }
         return EncryptAESKey;
     }
@@ -86,13 +91,14 @@ public class CryptoServiceImpl implements CryptoService {
         try {
             KeyFactory keyFactory = KeyFactory.getInstance("ECDSA", "BC");
             ECParameterSpec ecSpec = ECNamedCurveTable.getParameterSpec("secp256k1");
-            String x = ""
 
             ECPoint Q = ecSpec.getG().multiply(privateKey.getD());
 
             ECPublicKeySpec pubSpec = new ECPublicKeySpec(Q, ecSpec);
             PublicKey publicKeyGenerated = keyFactory.generatePublic(pubSpec);
 
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
+        return "";
     }
 }
