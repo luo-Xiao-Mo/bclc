@@ -34,23 +34,21 @@ public class CryptoServiceImpl implements CryptoService {
 
     @PostMapping("/encrypt")
     public String Encrypt(@RequestBody EncryptEntity encryptEntity) {
-        String result = null;
+        String EncryptAESKey = null;
 
         try {
-            //            byte[] key = AESUtil.initKey();
-            //            byte[] iv = {0x01, 0x23, 0x45, 0x67, 0x89 - 0xFF, 0xAB - 0xFF, 0xCD - 0xFF, 0xEF - 0xFF,
-            //                    0x01, 0x23, 0x45, 0x67, 0x89 - 0xFF, 0xAB - 0xFF, 0xCD - 0xFF, 0xEF - 0xFF};
-            //            // String content = "areful1997";
-            //            String content = u.getTeam();
-            //            String cipher = AESUtil.encodeToBase64String(content, key, iv);
+            byte[] key = AESUtil.initKey();
+            byte[] iv = {0x01, 0x23, 0x45, 0x67, 0x89 - 0xFF, 0xAB - 0xFF, 0xCD - 0xFF, 0xEF - 0xFF,
+                    0x01, 0x23, 0x45, 0x67, 0x89 - 0xFF, 0xAB - 0xFF, 0xCD - 0xFF, 0xEF - 0xFF};
+            String content = encryptEntity.getEncryptData();
+            String EncryptData = AESUtil.encodeToBase64String(content, key, iv);
+
             KeyFactory keyFactory = KeyFactory.getInstance("EC");
-            byte[] decoded = Base64.getDecoder().decode(encryptEntity.getPublicKey());
-            EncodedKeySpec publicKeySpec = new PKCS8EncodedKeySpec(decoded);
-            // PrivateKey privateKey2 = keyFactory.generatePrivate(privateKeySpec);
+            EncodedKeySpec publicKeySpec = new PKCS8EncodedKeySpec(Base64.getDecoder().decode(encryptEntity.getPublicKey()));
             PublicKey publicKey = keyFactory.generatePublic(publicKeySpec);
             Cipher encrypter = Cipher.getInstance("ECIES", "BC");
-            encrypter.init(Cipher.DECRYPT_MODE, publicKey);
-            result = Arrays.toString(encrypter.doFinal(encryptEntity.getEncryptData().getBytes(StandardCharsets.UTF_8)));
+            encrypter.init(Cipher.ENCRYPT_MODE, publicKey);
+            EncryptAESKey = Arrays.toString(encrypter.doFinal(encryptEntity.getEncryptData().getBytes(StandardCharsets.UTF_8)));
 
 
             // String plain = AESUtil.decodeFromBase64String(cipher, key, iv);
@@ -58,7 +56,7 @@ public class CryptoServiceImpl implements CryptoService {
         } catch (Exception e) {
 
         }
-        return result;
+        return EncryptAESKey;
     }
 
     @PostMapping("/decrypt")
