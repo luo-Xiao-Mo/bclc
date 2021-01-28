@@ -6,12 +6,13 @@ import java.nio.charset.StandardCharsets;
 import java.security.KeyFactory;
 import java.security.PrivateKey;
 import java.security.PublicKey;
-import java.security.spec.ECPublicKeySpec;
+import org.bouncycastle.jce.spec.ECPublicKeySpec;
 import java.security.spec.EncodedKeySpec;
 import java.security.spec.PKCS8EncodedKeySpec;
 
 import com.blockchain.api.service.entity.DecryptEntity;
 import com.blockchain.api.service.entity.EncryptEntity;
+import org.bouncycastle.jce.ECNamedCurveTable;
 import org.bouncycastle.jce.interfaces.ECPrivateKey;
 import org.bouncycastle.jce.interfaces.ECPublicKey;
 import org.bouncycastle.jce.spec.ECParameterSpec;
@@ -68,7 +69,6 @@ public class CryptoServiceImpl implements CryptoService {
             byte[] encryptData = Base64.getDecoder().decode(u.getData());
             // EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(publicKeyBytes);
             // KeyFactory keyFactory = KeyFactory.getInstance("EC");
-            // <E8><BF><99><E9><87><8C> <E7><A7><81><E9><92><A5><E8><A6><81><E8><87><AA><E5><B7><B1><E4><BF><9D><E5><AD><98><E5><A5><BD>
             ECPrivateKey privateKey = null;
 
             // ECPublicKey publicKey = (ECPublicKey) keyFactory.generatePublic(publicKeySpec);
@@ -81,5 +81,18 @@ public class CryptoServiceImpl implements CryptoService {
 
         }
         return result;
+    }
+    public String getPublicKeyFromPrivateKey(ECPrivateKey privateKey) {
+        try {
+            KeyFactory keyFactory = KeyFactory.getInstance("ECDSA", "BC");
+            ECParameterSpec ecSpec = ECNamedCurveTable.getParameterSpec("secp256k1");
+            String x = ""
+
+            ECPoint Q = ecSpec.getG().multiply(privateKey.getD());
+
+            ECPublicKeySpec pubSpec = new ECPublicKeySpec(Q, ecSpec);
+            PublicKey publicKeyGenerated = keyFactory.generatePublic(pubSpec);
+
+        } catch (Exception e) {}
     }
 }
