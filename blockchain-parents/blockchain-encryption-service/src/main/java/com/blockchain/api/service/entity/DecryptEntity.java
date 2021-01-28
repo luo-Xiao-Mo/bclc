@@ -8,5 +8,5 @@ public class DecryptEntity {
     private String name;
     private String age;
     private String team;
-    private String Data;
+    private String EncryptData;
 }
