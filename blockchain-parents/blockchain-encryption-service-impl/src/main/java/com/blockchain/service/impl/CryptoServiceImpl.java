@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.crypto.Cipher;
-import java.util.Arrays;
 import java.util.Base64;
 
 @RestController
@@ -29,19 +28,31 @@ public class CryptoServiceImpl implements CryptoService {
     //特征向量
     private byte[] iv = {0x01, 0x23, 0x45, 0x67, 0x89 - 0xFF, 0xAB - 0xFF, 0xCD - 0xFF, 0xEF - 0xFF,
             0x01, 0x23, 0x45, 0x67, 0x89 - 0xFF, 0xAB - 0xFF, 0xCD - 0xFF, 0xEF - 0xFF};
+    private static byte[] key;
+
+
+    static {
+        try {
+            key = AESUtil.initKey();
+        } catch (Exception e) {
+            System.out.println("aes init exception:" + e);
+        }
+    }
+
     @Value("${server.port}")
     private String serverPort;
 
     @PostMapping("/encrypt")
     public String Encrypt(@RequestBody EncryptEntity encryptEntity) {
-        encryptEntity.setData("hello world");
+        // encryptEntity.setData("hello world");
         String EncryptAESKey = null;
+        String EncryptData = null;
 
         try {
             //AES加密
-            byte[] key = AESUtil.initKey();
+            // byte[] key = AESUtil.initKey();
 
-            String EncryptData = AESUtil.encodeToBase64String(encryptEntity.getData(), key, iv);
+            EncryptData = AESUtil.encodeToBase64String(encryptEntity.getData(), key, iv);
             System.out.println("AES EncryptData:" + EncryptData);
 
             //ECC加密
@@ -61,12 +72,11 @@ public class CryptoServiceImpl implements CryptoService {
         } catch (Exception e) {
             System.out.println("exception" + e);
         }
-        return EncryptAESKey;
+        return EncryptData;
     }
 
     @PostMapping("/decrypt")
     public String Decrypt(@RequestBody DecryptEntity d) {
-        byte[] DecryptAESKey;
         String result = "";
         try {
             DecryptEntity u = new DecryptEntity();
@@ -84,8 +94,8 @@ public class CryptoServiceImpl implements CryptoService {
             // Cipher decrypter = Cipher.getInstance("ECIES", "BC");
             Cipher decrypter = Cipher.getInstance("ECIES", "BC");
             decrypter.init(Cipher.DECRYPT_MODE, privateKey);
-            DecryptAESKey = decrypter.doFinal(encryptData);
-            result =  AESUtil.decodeFromBase64String(d.getEncryptData(),DecryptAESKey, iv);
+            // DecryptAESKey = decrypter.doFinal(encryptData);
+            result = AESUtil.decodeFromBase64String(d.getEncryptData(), key, iv);
         } catch (Exception e) {
             System.out.println("exception:" + e);
         }
