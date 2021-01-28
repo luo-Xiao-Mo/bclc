@@ -51,9 +51,11 @@ public class CryptoServiceImpl implements CryptoService {
         try {
             //AES加密
             // byte[] key = AESUtil.initKey();
+            System.out.println("data:" + encryptEntity);
+            System.out.println("key:" + key);
 
             EncryptData = AESUtil.encodeToBase64String(encryptEntity.getData(), key, iv);
-            System.out.println("AES EncryptData:" + EncryptData);
+            // System.out.println("AES EncryptData:" + EncryptData);
 
             //ECC加密
             Security.addProvider(new BouncyCastleProvider());
@@ -71,6 +73,7 @@ public class CryptoServiceImpl implements CryptoService {
             // System.out.println(plain);
         } catch (Exception e) {
             System.out.println("exception" + e);
+            e.printStackTrace();
         }
         return EncryptData;
     }
@@ -81,7 +84,7 @@ public class CryptoServiceImpl implements CryptoService {
         try {
             DecryptEntity u = new DecryptEntity();
             // byte[] publicKeyBytes = Base64.getDecoder().decode(u.getPublicKey());
-            byte[] encryptData = Base64.getDecoder().decode(u.getEncryptData());
+            // byte[] encryptData = Base64.getDecoder().decode(u.getEncryptData());
             // EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(publicKeyBytes);
             // KeyFactory keyFactory = KeyFactory.getInstance("EC");
             // ECC解密
@@ -98,6 +101,7 @@ public class CryptoServiceImpl implements CryptoService {
             result = AESUtil.decodeFromBase64String(d.getEncryptData(), key, iv);
         } catch (Exception e) {
             System.out.println("exception:" + e);
+            e.printStackTrace();
         }
         return result;
     }

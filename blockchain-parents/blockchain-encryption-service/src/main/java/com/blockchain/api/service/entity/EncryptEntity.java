@@ -7,6 +7,6 @@ public class EncryptEntity {
 
     // private String name;
     // private String age;
-    private String Data;
+    private String data;
     // private String publicKey;
 }

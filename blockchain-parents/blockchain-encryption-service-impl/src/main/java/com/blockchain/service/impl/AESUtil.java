@@ -6,16 +6,20 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
+import java.security.SecureRandom;
 import java.security.spec.AlgorithmParameterSpec;
 import java.util.Base64;
 
 public class AESUtil {
     private static final String CIPHER_ALGORITHM_CBC = "AES/CBC/PKCS5Padding";
     private static final String KEY_ALGORITHM = "AES";
+    private static final String ENCODE_RULES = "MUTTER";
 
             public static byte[] initKey() throws Exception {
                 KeyGenerator kg = KeyGenerator.getInstance(KEY_ALGORITHM);
-                kg.init(128);
+                SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");
+                secureRandom.setSeed(ENCODE_RULES.getBytes());
+                kg.init(128, secureRandom);
                 SecretKey secretKey = kg.generateKey();
                 return secretKey.getEncoded();
             }
